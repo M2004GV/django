@@ -22,5 +22,5 @@ from django.conf.urls.static import static
 from cars.views import home_view
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("cars/", home_view),
+    path("cars/", home_view, name='cars_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
