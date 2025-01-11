@@ -2,6 +2,8 @@ from django.shortcuts import render
 from cars.models import Car
 
 def home_view(request):
+
+    request.GET.get('search')
     cars = Car.objects.all() #selecionar todos os objetos do banco de dados Car
     #print(cars)
 
