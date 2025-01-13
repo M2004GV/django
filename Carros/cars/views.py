@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from cars.models import Car
+from cars.forms import CarForm
 
-def home_view(request):
+def cars_view(request):
     cars = Car.objects.all().order_by('model') #selecionar todos os objetos do banco de dados Car
     search = request.GET.get('search')
     #print(cars)
@@ -16,3 +17,7 @@ def home_view(request):
         'cars.html', {
         'cars': cars}
     )
+
+def new_car_view(request):
+    new_car_form = CarForm()
+    return render(request, 'new_car.html', { 'new_car_form' : new_car_form})
