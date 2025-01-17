@@ -2,22 +2,21 @@ from django.shortcuts import render, redirect
 from cars.models import Car
 from cars.forms import CarModelForm
 from django.views import View
+from django.views.generic import ListView
+  
+class CarsListView(ListView):
+    model = Car
+    template_name = 'cars.html'
+    context_object_name = 'cars'
 
-class CarsView(View):
-    
-    def get(self, request):
-        cars = Car.objects.all().order_by('model') #selecionar todos os objetos do banco de dados Car
-        search = request.GET.get('search')
-        #cars = Car.objects.filter(brand__name='Fiat')
-
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('model')
+        search = self.request.GET.get('search')
         if search:
-            cars = Car.objects.filter(model__icontains=search)#icontains vai ignorar o uppercase e lowercase
+            cars = cars.filter(model__icontains=search)
 
-        return render(
-            request,          
-            'cars.html', {
-            'cars': cars}
-        )
+        return queryset
+
 
 class NewCarView(View):
 
