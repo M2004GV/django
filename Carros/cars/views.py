@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from cars.models import Car
 from cars.forms import CarModelForm
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
   
 class CarsListView(ListView):
     model = Car
@@ -31,4 +31,13 @@ class NewCarView(View):
             new_car_form.save()
             return redirect('cars_list')
         return render(request, 'new_car.html', { 'new_car_form' : new_car_form})
+
+class NewCarCreateView(CreateView):
+    model = Car
+    form_class = CarModelForm
+    template_name = 'new_car.html'
+    success_url = '/cars/'
+
+
+
 
